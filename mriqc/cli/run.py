@@ -120,12 +120,12 @@ def main():
             from .workflow import build_workflow
 
             retval = mgr.dict()
-            p = SingleProcessing.Process(target=build_workflow, args=(str(config_file), retval))
+            p = Process(target=build_workflow, args=(str(config_file), retval))
             p.start()
             p.join()
 
-            # mriqc_wf = retval.get("workflow", None)
-            # EXITCODE = p.exitcode or retval.get("return_code", 0)
+            mriqc_wf = retval.get("workflow", None)
+            EXITCODE = p.exitcode or retval.get("return_code", 0)
 
         # CRITICAL Load the config from the file. This is necessary because the ``build_workflow``
         # function executed constrained in a process may change the config (and thus the global
