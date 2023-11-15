@@ -23,6 +23,21 @@
 """Definition of the command line interface's (CLI) entry point."""
 EXITCODE: int = -1
 
+class SingleProcessing:
+    def __init__(self, target, args):
+        self.target = target
+        self.args = args
+    
+    @staticmethod
+    def Process(target, args):
+        return SingleProcessing(target, args)
+    
+    def start(self):
+        self.target(*self.args)
+    
+    def join(self):
+        pass
+
 
 def main():
     """Entry point for MRIQC's CLI."""
@@ -98,14 +113,14 @@ def main():
         # CRITICAL Call build_workflow(config_file, retval) in a subprocess.
         # Because Python on Linux does not ever free virtual memory (VM), running the
         # workflow construction jailed within a process preempts excessive VM buildup.
-        from multiprocessing import Manager, Process
+        from multiprocessing import Manager
 
         global EXITCODE
         with Manager() as mgr:
             from .workflow import build_workflow
 
             retval = mgr.dict()
-            p = Process(target=build_workflow, args=(str(config_file), retval))
+            p = SingleProcessing.Process(target=build_workflow, args=(str(config_file), retval))
             p.start()
             p.join()
 
