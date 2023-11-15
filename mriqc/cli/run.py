@@ -124,8 +124,8 @@ def main():
             p.start()
             p.join()
 
-            mriqc_wf = retval.get("workflow", None)
-            EXITCODE = p.exitcode or retval.get("return_code", 0)
+            # mriqc_wf = retval.get("workflow", None)
+            # EXITCODE = p.exitcode or retval.get("return_code", 0)
 
         # CRITICAL Load the config from the file. This is necessary because the ``build_workflow``
         # function executed constrained in a process may change the config (and thus the global
