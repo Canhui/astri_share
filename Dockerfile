@@ -148,7 +148,7 @@ COPY . /src/mriqc
 ARG VERSION
 
 
-RUN export SETUPTOOLS_SCM_PRETEND_VERSION=$VERSION && \
+RUN export SETUPTOOLS_SCM_PRETEND_VERSION=1 && \
     pip install --no-cache-dir "/src/mriqc[all]"
 
 RUN find $HOME -type d -exec chmod go=u {} + && \
